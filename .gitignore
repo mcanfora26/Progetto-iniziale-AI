@@ -1,0 +1,7 @@
+# File da NON mettere su GitLab
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+.langgraph_api/
+.DS_Store
