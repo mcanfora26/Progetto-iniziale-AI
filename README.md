@@ -3,7 +3,27 @@
 Un unico agente che cresce settimana dopo settimana, attraversando tutto il ciclo
 Build -> Test -> Deploy -> Monitor, esattamente come i domini dell'esame.
 
-## P1 - HelpDesk v1 (settimana 1, ~3 ore)  -> cartella progetti/p1_helpdesk
+## Installazione
+
+Requisiti: Python 3.11 o superiore.
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env   # poi inserisci le tue chiavi in .env
+```
+
+## Avvio
+
+```bash
+cd p1_helpdesk
+python main.py
+```
+
+Scrivi `esci` per terminare la chat.
+
+## P1 - HelpDesk v1 (settimana 1, ~3 ore)  -> cartella p1_helpdesk
 - `create_agent` con 3 tool: `cerca_faq(domanda)` (cerca in un dizionario o in un file .md di FAQ),
   `stato_ordine(id_ordine)` (finto database), `apri_ticket(categoria, priorita, descrizione)`
 - memoria per conversazione (checkpointer + thread_id) e un ciclo di chat da terminale
