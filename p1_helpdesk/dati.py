@@ -15,6 +15,7 @@ ORDINI: dict[int, Ordine] = {
 }
 
 TICKET: list[dict] = []
+RIMBORSI: list[dict] = []
 
 FAQ: dict[str, dict] = {
     "Resi": {
