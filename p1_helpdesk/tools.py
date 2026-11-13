@@ -4,9 +4,9 @@ from langchain.agents import create_agent
 from langchain.agents.structured_output import ToolStrategy
 from langchain.tools import tool
 from pydantic import BaseModel, Field
+from dati import FAQ, ORDINI, RIMBORSI, TICKET, Errore, Ordine
 
 from config import MODEL
-from dati import FAQ, ORDINI, TICKET, Errore, Ordine
 
 class TicketInfo(BaseModel):
     """Classificazione di un ticket di assistenza."""
@@ -100,3 +100,20 @@ def apri_ticket(descrizione: str) -> str:
     numero = len(TICKET) + 1
     TICKET.append({"numero": numero, **info.model_dump(), "descrizione": descrizione})
     return f"Ticket #{numero} aperto. {info.model_dump_json()}"
+
+@tool
+def rimborsa(id_ordine: int, importo: float) -> str:
+    """Emette un rimborso in euro per un ordine specifico. Richiede l'id dell'ordine e l'importo.
+    Usalo solo quando l'utente chiede esplicitamente un rimborso per un suo ordine
+    (es. "Rimborsami 20 euro per l'ordine 1234").
+    Non usarlo se l'utente chiede come funzionano resi o rimborsi in generale: usa cerca_faq.
+    Non usarlo se l'utente segnala un problema senza chiedere un rimborso: usa apri_ticket."""
+
+    if id_ordine not in ORDINI:
+        return f"Errore: non esiste un ordine con id {id_ordine}."
+    if importo <= 0:
+        return f"Errore: l'importo {importo} non è valido, deve essere maggiore di zero."
+
+    numero = len(RIMBORSI) + 1
+    RIMBORSI.append({"numero": numero, "id_ordine": id_ordine, "importo": importo})
+    return f"Rimborso #{numero} di {importo:.2f} euro emesso per l'ordine {id_ordine}."

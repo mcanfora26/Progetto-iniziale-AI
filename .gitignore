@@ -5,3 +5,5 @@ __pycache__/
 .pytest_cache/
 .langgraph_api/
 .DS_Store
+.report_settimanale.md
+tmp/
